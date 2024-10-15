@@ -1,5 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const btnClicked = (text: string) => {
+  alert(`Button clicked: ${text}`);
+};
+</script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <div class="flex flex-col items-center">
+    <h1 class="mt-3 mb-8 text-3xl underline">Hello world!</h1>
+    <Button class="w-28" label="Check" icon="pi pi-check" @click="btnClicked('Check')" />
+  </div>
 </template>
