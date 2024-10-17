@@ -5,7 +5,7 @@ const btnClicked = (text: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center bg-primary">
     <h1 class="mt-3 mb-8 text-3xl underline">Hello world!</h1>
     <Button
       class="w-28"
