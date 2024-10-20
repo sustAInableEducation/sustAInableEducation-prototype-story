@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { stories } from '@/data/stories'
+import router from '@/router'
 
 const startStory = (id: number) => {
-  console.log('Start story with id:', id)
+  // console.log('Start story with id:', id)
+  router.push({ name: 'story', params: { id } })
 }
 </script>
 
