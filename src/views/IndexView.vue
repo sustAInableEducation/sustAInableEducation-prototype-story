@@ -1,36 +1,41 @@
 <script setup lang="ts">
 interface Story {
-  title: string;
-  description: string;
-  prompt: string;
+  id: number
+  title: string
+  prompt: string
 }
 
 const stories: Story[] = [
   {
-    title: "Story 1",
-    description: "Description 1",
-    prompt: "Prompt 1",
+    id: 0,
+    title: 'Leben am Land',
+    prompt: 'Prompt 1',
   },
   {
-    title: "Story 2",
-    description: "Description 2",
-    prompt: "Prompt 2",
+    id: 1,
+    title: 'Verantwortungsvoller Konsum',
+    prompt: 'Prompt 2',
   },
   {
-    title: "Story 3",
-    description: "Description 3",
-    prompt: "Prompt 3",
+    id: 2,
+    title: 'Leben Unterwasser',
+    prompt: 'Prompt 3',
   },
   {
-    title: "Story 4",
-    description: "Description 4",
-    prompt: "Prompt 4",
-  }
-];
+    id: 3,
+    title: 'Nachhaltige Städte',
+    prompt: 'Prompt 4',
+  },
+]
+
+const startStory = (id: number) => {
+  console.log('Start Story', id)
+  // Navigate to story view
+}
 </script>
 
 <template>
-  <div class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-12">
+  <div class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-12 text-center">
     <div class="background"></div>
     <h1 class="text-7xl font-bold">Prototyp Story Generierung</h1>
     <p>
@@ -51,7 +56,13 @@ const stories: Story[] = [
       at vero eros et accumsan et iusto
     </p>
     <div class="flex flex-row justify-center gap-12">
-      <Button v-for="story in stories" :key="story.title" :label="story.title" class="w-28" />
+      <Button
+        v-for="story in stories"
+        :key="story.id"
+        :label="story.title"
+        class="w-64"
+        @click="startStory(story.id)"
+      />
     </div>
   </div>
 </template>
