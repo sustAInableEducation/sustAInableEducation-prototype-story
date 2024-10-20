@@ -8,17 +8,17 @@ interface Story {
 const stories: Story[] = [
   {
     id: 0,
-    title: 'Leben am Land',
+    title: 'Sauberes Wasser',
     prompt: 'Prompt 1',
   },
   {
     id: 1,
-    title: 'Verantwortungsvoller Konsum',
+    title: 'Klimaschutzmaßnahmen',
     prompt: 'Prompt 2',
   },
   {
     id: 2,
-    title: 'Leben Unterwasser',
+    title: 'Klimaschutzmaßnahmen',
     prompt: 'Prompt 3',
   },
   {
@@ -26,6 +26,11 @@ const stories: Story[] = [
     title: 'Nachhaltige Städte',
     prompt: 'Prompt 4',
   },
+  {
+    id: 4,
+    title: 'Sauberer Strom',
+    prompt: 'Prompt 5',
+  }
 ]
 
 const startStory = (id: number) => {
