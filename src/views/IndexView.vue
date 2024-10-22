@@ -14,22 +14,16 @@ const startStory = (id: number) => {
   >
     <div class="background"></div>
     <h1 class="text-7xl font-bold">Prototyp Story Generierung</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
-      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-      sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-      diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-      erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-      rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-      dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate
-      velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis
-      at vero eros et accumsan et iusto
+    <p class="text-lg">
+      Unser Prototyp zeigt, wie Künstliche Intelligenz (KI) genutzt werden kann,
+      um interaktive Geschichten rund um Nachhaltigkeit zu erstellen.
+      Besucher*innen können zwischen verschiedenen Themen wählen und erleben,
+      wie ihre Entscheidungen den Verlauf der Story beeinflussen. Am Ende gibt
+      es die Möglichkeit, Feedback zu geben, das uns hilft, die endgültige
+      Version der Web-App zu verbessern. Dein Feedback ist uns wichtig! Teste
+      die Geschichten und sag uns, was dir gefällt oder wo es noch
+      Verbesserungen gibt. Deine Rückmeldungen fließen direkt in die
+      Weiterentwicklung der App ein.
     </p>
     <div class="flex flex-row justify-center gap-12">
       <Button
