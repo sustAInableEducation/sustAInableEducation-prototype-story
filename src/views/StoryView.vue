@@ -46,10 +46,14 @@ const generateNextPart = (userMessage: Message) => {
 
 const startStory = (systemMessage: Message) => {
   messages.value.push(systemMessage)
-  generateNextPart({
-    role: 'user',
-    content: selectedStory.value?.userPrompt,
-  })
+  if (selectedStory.value?.userPrompt) {
+    generateNextPart({
+      role: 'user',
+      content: selectedStory.value.userPrompt,
+    })
+  } else {
+    errorWhileGenerating.value = true
+  }
 }
 
 onMounted(() => {
