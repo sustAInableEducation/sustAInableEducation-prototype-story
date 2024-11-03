@@ -29,6 +29,34 @@ const getLocalModels = () => {
     })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const generateCompletion = () => {
+  const data = {
+    model: 'llama3.1',
+    prompt: 'Why is the sky blue?e',
+    stream: false,
+  }
+
+  const config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: import.meta.env.VITE_LLM_API_URL + '/generate',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: data,
+  }
+
+  axios
+    .request(config)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
+
 onMounted(() => {
   if (props.id === undefined || !stories[props.id]) {
     storyNotFound.value = true
