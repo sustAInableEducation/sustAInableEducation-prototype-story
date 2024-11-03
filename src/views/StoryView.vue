@@ -15,7 +15,7 @@ const getLocalModels = () => {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: 'http://bedlinger-server.tail853a7d.ts.net:11434/api/tags',
+    url: import.meta.env.VITE_LLM_API_URL + '/tags',
     headers: {},
   }
 
