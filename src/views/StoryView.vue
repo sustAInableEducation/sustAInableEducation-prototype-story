@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import axios from 'axios'
 import type { Story } from '../types/story'
 import type { Message } from '../types/message'
+import type { DisplayedMessage } from '@/types/displayedMessage'
 import { stories } from '@/data/stories'
 
 const props = defineProps({
@@ -12,6 +13,21 @@ const selectedStory = ref<Story>({} as Story)
 const errorWhileGenerating = ref<boolean>(false)
 const messages = ref<Message[]>([])
 const storyTitle = ref<string>('')
+const displayedMessages = computed<DisplayedMessage[]>(() => {
+  const filteredMessages = messages.value.filter(
+    message => message.role === 'assistant',
+  )
+  const displayedMessages: DisplayedMessage[] = []
+  filteredMessages.forEach(message => {
+    const content = JSON.parse(message.content)
+    displayedMessages.push({
+      title: content.title,
+      story: content.story,
+      options: content.options,
+    })
+  })
+  return displayedMessages
+})
 
 const generateNextPart = (userMessage: Message) => {
   messages.value.push(userMessage)
@@ -39,6 +55,7 @@ const generateNextPart = (userMessage: Message) => {
       storyTitle.value = JSON.parse(assistantMessage.content).title
       //console.log(assistantMessage)
       //console.log(storyTitle.value)
+      //console.log(displayedMessages.value)
     })
     .catch(error => {
       console.log(error)
@@ -87,5 +104,9 @@ onMounted(() => {
   </div>
   <div v-if="!errorWhileGenerating && storyTitle !== ''">
     <p>{{ storyTitle }}</p>
+    <div v-for="message in displayedMessages" :key="message.story">
+      <p>{{ message.story }}</p>
+      <p>{{ message.options }}</p>
+    </div>
   </div>
 </template>
