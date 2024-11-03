@@ -36,11 +36,20 @@ const generateNextPart = (userMessage: Message) => {
       const assistantMessage = response.data.message
       messages.value.push(assistantMessage)
       console.log(messages.value)
+      console.log(JSON.parse(assistantMessage.content))
     })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .catch(_error => {
       errorWhileGenerating.value = true
     })
+}
+
+const startStory = (systemMessage: Message) => {
+  messages.value.push(systemMessage)
+  generateNextPart({
+    role: 'user',
+    content: selectedStory.value?.userPrompt,
+  })
 }
 
 onMounted(() => {
@@ -51,9 +60,9 @@ onMounted(() => {
     selectedStory.value = stories[props.id]
   }
 
-  generateNextPart({
-    role: 'user',
-    content: selectedStory.value?.prompt,
+  startStory({
+    role: 'system',
+    content: selectedStory.value?.systemPrompt,
   })
 })
 
