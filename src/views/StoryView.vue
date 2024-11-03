@@ -55,106 +55,106 @@ onMounted(() => {
   })
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getLocalModels = () => {
-  const config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: import.meta.env.VITE_LLM_API_URL + '/tags',
-    headers: {},
-  }
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const getLocalModels = () => {
+//   const config = {
+//     method: 'get',
+//     maxBodyLength: Infinity,
+//     url: import.meta.env.VITE_LLM_API_URL + '/tags',
+//     headers: {},
+//   }
 
-  axios
-    .request(config)
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-}
+//   axios
+//     .request(config)
+//     .then(response => {
+//       console.log(response.data)
+//     })
+//     .catch(error => {
+//       console.log(error)
+//     })
+// }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const generateCompletion = () => {
-  const data = {
-    model: 'llama3.1',
-    prompt: 'Why is the sky blue?',
-    stream: false,
-  }
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const generateCompletion = () => {
+//   const data = {
+//     model: 'llama3.1',
+//     prompt: 'Why is the sky blue?',
+//     stream: false,
+//   }
 
-  const config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: import.meta.env.VITE_LLM_API_URL + '/generate',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: data,
-  }
+//   const config = {
+//     method: 'post',
+//     maxBodyLength: Infinity,
+//     url: import.meta.env.VITE_LLM_API_URL + '/generate',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     data: data,
+//   }
 
-  axios
-    .request(config)
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-}
+//   axios
+//     .request(config)
+//     .then(response => {
+//       console.log(response.data)
+//     })
+//     .catch(error => {
+//       console.log(error)
+//     })
+// }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const chatRequest = () => {
-  const messages = [
-    {
-      role: 'user',
-      content: 'Why is the sky blue?',
-    },
-  ]
-  let data = {
-    model: 'llama3.1',
-    messages: messages,
-    stream: false,
-  }
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const chatRequest = () => {
+//   const messages = [
+//     {
+//       role: 'user',
+//       content: 'Why is the sky blue?',
+//     },
+//   ]
+//   let data = {
+//     model: 'llama3.1',
+//     messages: messages,
+//     stream: false,
+//   }
 
-  const config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: import.meta.env.VITE_LLM_API_URL + '/chat',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: data,
-  }
+//   const config = {
+//     method: 'post',
+//     maxBodyLength: Infinity,
+//     url: import.meta.env.VITE_LLM_API_URL + '/chat',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     data: data,
+//   }
 
-  axios
-    .request(config)
-    .then(response => {
-      const message = response.data.message
-      messages.push(message)
-      messages.push({
-        role: 'user',
-        content: 'Can it be other colors?',
-      })
-      data = {
-        model: 'llama3.1',
-        messages: messages,
-        stream: false,
-      }
-      axios
-        .request({ ...config, data: data })
-        .then(response => {
-          const message = response.data.message
-          messages.push(message)
-          console.log(messages)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    })
-    .catch(error => {
-      console.log(error)
-    })
-}
+//   axios
+//     .request(config)
+//     .then(response => {
+//       const message = response.data.message
+//       messages.push(message)
+//       messages.push({
+//         role: 'user',
+//         content: 'Can it be other colors?',
+//       })
+//       data = {
+//         model: 'llama3.1',
+//         messages: messages,
+//         stream: false,
+//       }
+//       axios
+//         .request({ ...config, data: data })
+//         .then(response => {
+//           const message = response.data.message
+//           messages.push(message)
+//           console.log(messages)
+//         })
+//         .catch(error => {
+//           console.log(error)
+//         })
+//     })
+//     .catch(error => {
+//       console.log(error)
+//     })
+// }
 </script>
 
 <template>
