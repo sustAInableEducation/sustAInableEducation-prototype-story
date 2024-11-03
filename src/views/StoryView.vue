@@ -2,12 +2,32 @@
 import { onMounted, ref } from 'vue'
 import type { Story } from '../types/story'
 import { stories } from '@/data/stories'
+import axios from 'axios'
 
 const props = defineProps({
   id: Number,
 })
 const selectedStory = ref<Story | null>(null)
 const storyNotFound = ref<boolean>(false)
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getLocalModels = () => {
+  const config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: 'http://bedlinger-server.tail853a7d.ts.net:11434/api/tags',
+    headers: {},
+  }
+
+  axios
+    .request(config)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
 
 onMounted(() => {
   if (props.id === undefined || !stories[props.id]) {
