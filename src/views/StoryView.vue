@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import type { Story } from '../types/story'
+import type { Message } from '../types/message'
 import { stories } from '@/data/stories'
 import axios from 'axios'
 
@@ -9,6 +10,50 @@ const props = defineProps({
 })
 const selectedStory = ref<Story | null>(null)
 const storyNotFound = ref<boolean>(false)
+const messages = ref<Message[]>([])
+
+const generateNextPart = (userMessage: Message) => {
+  messages.value.push(userMessage)
+  const data = {
+    model: 'llama3.1',
+    messages: messages.value,
+    format: 'json',
+    stream: false,
+  }
+  const config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: import.meta.env.VITE_LLM_API_URL + '/chat',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: data,
+  }
+
+  axios
+    .request(config)
+    .then(response => {
+      const assistantMessage = response.data.message
+      messages.value.push(assistantMessage)
+      console.log(messages.value)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
+
+onMounted(() => {
+  if (props.id === undefined || !stories[props.id]) {
+    storyNotFound.value = true
+  } else {
+    selectedStory.value = stories[props.id]
+  }
+
+  generateNextPart({
+    role: 'user',
+    content: 'Why is the sky blue? Respond using JSON',
+  })
+})
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getLocalModels = () => {
@@ -110,14 +155,6 @@ const chatRequest = () => {
       console.log(error)
     })
 }
-
-onMounted(() => {
-  if (props.id === undefined || !stories[props.id]) {
-    storyNotFound.value = true
-  } else {
-    selectedStory.value = stories[props.id]
-  }
-})
 </script>
 
 <template>
