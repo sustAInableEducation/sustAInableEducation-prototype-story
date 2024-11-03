@@ -51,7 +51,7 @@ onMounted(() => {
 
   generateNextPart({
     role: 'user',
-    content: 'Why is the sky blue? Respond using JSON',
+    content: selectedStory.value?.prompt,
   })
 })
 
