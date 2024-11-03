@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import axios from 'axios'
 import type { Story } from '../types/story'
 import type { Message } from '../types/message'
 import { stories } from '@/data/stories'
-import axios from 'axios'
 
 const props = defineProps({
   id: Number,
 })
-const selectedStory = ref<Story | null>(null)
+const selectedStory = ref<Story>({} as Story)
 const errorWhileGenerating = ref<boolean>(false)
 const messages = ref<Message[]>([])
+const storyTitle = ref<string>('')
 
 const generateNextPart = (userMessage: Message) => {
   messages.value.push(userMessage)
@@ -35,141 +36,35 @@ const generateNextPart = (userMessage: Message) => {
     .then(response => {
       const assistantMessage = response.data.message
       messages.value.push(assistantMessage)
-      console.log(messages.value)
-      console.log(JSON.parse(assistantMessage.content))
+      storyTitle.value = JSON.parse(assistantMessage.content).title
+      //console.log(assistantMessage)
+      //console.log(storyTitle.value)
     })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch(_error => {
+    .catch(error => {
+      console.log(error)
       errorWhileGenerating.value = true
     })
 }
 
 const startStory = (systemMessage: Message) => {
   messages.value.push(systemMessage)
-  if (selectedStory.value?.userPrompt) {
-    generateNextPart({
-      role: 'user',
-      content: selectedStory.value.userPrompt,
-    })
-  } else {
-    errorWhileGenerating.value = true
-  }
+  generateNextPart({
+    role: 'user',
+    content: selectedStory.value.userPrompt,
+  })
 }
 
 onMounted(() => {
-  if (props.id === undefined || !stories[props.id]) {
+  if (props.id === undefined || props.id < 0 || props.id >= stories.length || !stories[props.id]) {
     errorWhileGenerating.value = true
-    return
   } else {
     selectedStory.value = stories[props.id]
+    startStory({
+      role: 'system',
+      content: selectedStory.value?.systemPrompt,
+    })
   }
-
-  startStory({
-    role: 'system',
-    content: selectedStory.value?.systemPrompt,
-  })
 })
-
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const getLocalModels = () => {
-//   const config = {
-//     method: 'get',
-//     maxBodyLength: Infinity,
-//     url: import.meta.env.VITE_LLM_API_URL + '/tags',
-//     headers: {},
-//   }
-
-//   axios
-//     .request(config)
-//     .then(response => {
-//       console.log(response.data)
-//     })
-//     .catch(error => {
-//       console.log(error)
-//     })
-// }
-
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const generateCompletion = () => {
-//   const data = {
-//     model: 'llama3.1',
-//     prompt: 'Why is the sky blue?',
-//     stream: false,
-//   }
-
-//   const config = {
-//     method: 'post',
-//     maxBodyLength: Infinity,
-//     url: import.meta.env.VITE_LLM_API_URL + '/generate',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     data: data,
-//   }
-
-//   axios
-//     .request(config)
-//     .then(response => {
-//       console.log(response.data)
-//     })
-//     .catch(error => {
-//       console.log(error)
-//     })
-// }
-
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const chatRequest = () => {
-//   const messages = [
-//     {
-//       role: 'user',
-//       content: 'Why is the sky blue?',
-//     },
-//   ]
-//   let data = {
-//     model: 'llama3.1',
-//     messages: messages,
-//     stream: false,
-//   }
-
-//   const config = {
-//     method: 'post',
-//     maxBodyLength: Infinity,
-//     url: import.meta.env.VITE_LLM_API_URL + '/chat',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     data: data,
-//   }
-
-//   axios
-//     .request(config)
-//     .then(response => {
-//       const message = response.data.message
-//       messages.push(message)
-//       messages.push({
-//         role: 'user',
-//         content: 'Can it be other colors?',
-//       })
-//       data = {
-//         model: 'llama3.1',
-//         messages: messages,
-//         stream: false,
-//       }
-//       axios
-//         .request({ ...config, data: data })
-//         .then(response => {
-//           const message = response.data.message
-//           messages.push(message)
-//           console.log(messages)
-//         })
-//         .catch(error => {
-//           console.log(error)
-//         })
-//     })
-//     .catch(error => {
-//       console.log(error)
-//     })
-// }
 </script>
 
 <template>
@@ -185,7 +80,7 @@ onMounted(() => {
       @click="$router.push({ name: 'index' })"
     />
   </div>
-  <div v-else>
-    <p>{{ selectedStory?.title }}</p>
+  <div v-if="!errorWhileGenerating && storyTitle !== ''">
+    <p>{{ storyTitle }}</p>
   </div>
 </template>
