@@ -55,7 +55,12 @@ const startStory = (systemMessage: Message) => {
 }
 
 onMounted(() => {
-  if (props.id === undefined || props.id < 0 || props.id >= stories.length || !stories[props.id]) {
+  if (
+    props.id === undefined ||
+    props.id < 0 ||
+    props.id >= stories.length ||
+    !stories[props.id]
+  ) {
     errorWhileGenerating.value = true
   } else {
     selectedStory.value = stories[props.id]
