@@ -1,5 +1,6 @@
 export interface Story {
   id: number
   title: string
-  prompt: string
+  systemPrompt: string
+  userPrompt: string
 }
