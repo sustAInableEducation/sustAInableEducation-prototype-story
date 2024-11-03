@@ -4,7 +4,10 @@ import { RouterView } from 'vue-router'
 
 <template>
   <header class="flex justify-center py-2 h-28">
-    <div class="flex gap-2 items-center cursor-pointer" @click="$router.push({ name: 'index' })">
+    <div
+      class="flex gap-2 items-center cursor-pointer"
+      @click="$router.push({ name: 'index' })"
+    >
       <img src="./assets/logo.svg" alt="Logo" class="size-24" />
       <div class="font-bold text-xl">sustAInableEducation</div>
     </div>
