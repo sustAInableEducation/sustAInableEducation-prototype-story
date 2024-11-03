@@ -9,7 +9,7 @@ const props = defineProps({
   id: Number,
 })
 const selectedStory = ref<Story | null>(null)
-const storyNotFound = ref<boolean>(false)
+const errorWhileGenerating = ref<boolean>(false)
 const messages = ref<Message[]>([])
 
 const generateNextPart = (userMessage: Message) => {
@@ -37,14 +37,16 @@ const generateNextPart = (userMessage: Message) => {
       messages.value.push(assistantMessage)
       console.log(messages.value)
     })
-    .catch(error => {
-      console.log(error)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .catch(_error => {
+      errorWhileGenerating.value = true
     })
 }
 
 onMounted(() => {
   if (props.id === undefined || !stories[props.id]) {
-    storyNotFound.value = true
+    errorWhileGenerating.value = true
+    return
   } else {
     selectedStory.value = stories[props.id]
   }
@@ -159,11 +161,11 @@ onMounted(() => {
 
 <template>
   <div
-    v-if="storyNotFound"
+    v-if="errorWhileGenerating"
     class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-12 text-center"
   >
     <Message severity="error" class="text-center">
-      <p class="text-xl">Die angegebene Story wurde nich gefunden</p>
+      <p class="text-xl">Es ist ein Fehler aufgetreten!</p>
     </Message>
     <Button
       label="Zurück zur Startseite"
