@@ -55,7 +55,7 @@ const generateNextPart = (userMessage: Message) => {
       storyTitle.value = JSON.parse(assistantMessage.content).title
       //console.log(assistantMessage)
       //console.log(storyTitle.value)
-      //console.log(displayedMessages.value)
+      console.log(displayedMessages.value)
     })
     .catch(error => {
       console.log(error)
@@ -90,6 +90,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="background"></div>
   <div
     v-if="errorWhileGenerating"
     class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-12 text-center"
@@ -102,11 +103,32 @@ onMounted(() => {
       @click="$router.push({ name: 'index' })"
     />
   </div>
-  <div v-if="!errorWhileGenerating && storyTitle !== ''">
-    <p>{{ storyTitle }}</p>
-    <div v-for="message in displayedMessages" :key="message.story">
+  <div
+    v-if="!errorWhileGenerating && storyTitle !== ''"
+    class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-8"
+  >
+    <h1 class="text-7xl font-bold text-center">{{ storyTitle }}</h1>
+    <div v-for="(message, index) in displayedMessages" :key="index">
       <p>{{ message.story }}</p>
-      <p>{{ message.options }}</p>
+      <p class="font-bold pt-2">Entscheindungspunkt {{ index + 1 }}:</p>
+      <div v-if="index <= 2">
+        <ul class="list-disc pl-8">
+          <li v-for="option in message.options" :key="option">
+            {{ option }}
+          </li>
+        </ul>
+        <div class="flex flex-row justify-center gap-12 pt-4">
+          <Button
+            v-for="(option, idx) in message.options"
+            :key="idx"
+            :label="`Option ${idx + 1}`"
+            class="w-64"
+            @click="
+              generateNextPart({ role: 'user', content: `Option ${idx + 1}` })
+            "
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

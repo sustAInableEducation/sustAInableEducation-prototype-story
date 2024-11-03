@@ -6,6 +6,7 @@
   body {
     font-family: Outfit, system-ui, sans-serif;
     @apply bg-slate-50;
+    font-size: 19px;
   }
   .background {
     @apply absolute inset-x-0 top-0 h-screen bg-gradient-to-br bg-no-repeat bg-cover from-transparent via-20% via-primary-200 to-50% -z-50 blur-3xl;
