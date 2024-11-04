@@ -78,6 +78,11 @@ const startStory = (systemMessage: Message) => {
   })
 }
 
+const chooseOption = (messageIndex: number, userMessage: Message) => {
+  selectedOptions.value[messageIndex] = true
+  generateNextPart(userMessage)
+}
+
 onMounted(() => {
   if (
     props.id === undefined ||
@@ -115,10 +120,15 @@ onMounted(() => {
     class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-8"
   >
     <h1 class="text-7xl font-bold text-center">{{ storyTitle }}</h1>
-    <div v-for="(message, index) in displayedMessages" :key="index">
-      <div v-if="index <= 2">
+    <div
+      v-for="(message, messageIndex) in displayedMessages"
+      :key="messageIndex"
+    >
+      <div v-if="messageIndex <= 2">
         <p>{{ message.story }}</p>
-        <p class="font-bold pt-2">Entscheindungspunkt {{ index + 1 }}:</p>
+        <p class="font-bold pt-2">
+          Entscheindungspunkt {{ messageIndex + 1 }}:
+        </p>
         <ul class="list-disc pl-8">
           <li v-for="option in message.options" :key="option">
             {{ option }}
@@ -126,14 +136,16 @@ onMounted(() => {
         </ul>
         <div class="flex flex-row justify-center gap-12 pt-4">
           <Button
-            v-for="(option, idx) in message.options"
-            :key="idx"
-            :label="`Option ${idx + 1}`"
+            v-for="(option, optionIndex) in message.options"
+            :key="optionIndex"
+            :label="`Option ${optionIndex + 1}`"
             class="w-64"
-            :disabled="selectedOptions[index]"
+            :disabled="selectedOptions[messageIndex]"
             @click="
-              selectedOptions[index] = true
-              generateNextPart({ role: 'user', content: `Option ${idx + 1}` })
+              chooseOption(messageIndex, {
+                role: 'user',
+                content: `Option ${optionIndex + 1}`,
+              })
             "
           />
         </div>
