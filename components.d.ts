@@ -13,6 +13,7 @@ declare module 'vue' {
     RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tag: typeof import('primevue/tag')['default']
     TextArea: typeof import('primevue/textarea')['default']
   }
 }

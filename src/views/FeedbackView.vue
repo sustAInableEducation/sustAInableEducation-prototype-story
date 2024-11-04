@@ -2,7 +2,6 @@
 import { onMounted, ref, nextTick, computed } from 'vue'
 import type { Story } from '../types/story'
 import { stories } from '@/data/stories'
-import Message from 'primevue/message';
 
 const props = defineProps({
   id: Number,
@@ -186,7 +185,10 @@ onMounted(() => {
       <TextArea v-model="additionalFeedback" autoResize rows="5" cols="30" />
     </div>
     <div class="flex flex-row justify-center gap-12 pt-4 pb-6">
-      <Message v-if="feedbackNotComplete" severity="error">Bewerte bitte alle Aspekte, bevor das Feedback abgeschickt werden kann!</Message>
+      <Message v-if="feedbackNotComplete" severity="error"
+        >Bewerte bitte alle Aspekte, bevor das Feedback abgeschickt werden
+        kann!</Message
+      >
       <Button
         v-else
         label="Feedback abschicken"
