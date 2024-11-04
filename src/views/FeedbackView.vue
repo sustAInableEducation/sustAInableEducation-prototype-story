@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 import type { Story } from '../types/story'
 import { stories } from '@/data/stories'
 
@@ -28,6 +28,10 @@ const submitFeedback = () => {
   console.log(feedback)
 }
 
+const scrollToTop = () => {
+  nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }))
+}
+
 onMounted(() => {
   if (
     props.id === undefined ||
@@ -39,6 +43,7 @@ onMounted(() => {
   } else {
     selectedStory.value = stories[props.id]
   }
+  scrollToTop()
 })
 </script>
 
