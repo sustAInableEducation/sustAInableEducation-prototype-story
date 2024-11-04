@@ -132,9 +132,7 @@ onMounted(() => {
     >
       <div v-if="messageIndex <= 2">
         <p>{{ message.story }}</p>
-        <p class="font-bold pt-2">
-          Entscheindungspunkt {{ messageIndex + 1 }}:
-        </p>
+        <p class="font-bold pt-2">Entscheidungspunkt {{ messageIndex + 1 }}:</p>
         <ul class="list-decimal pl-8">
           <li v-for="option in message.options" :key="option">
             {{ option }}
@@ -162,7 +160,12 @@ onMounted(() => {
           <Button
             label="Weiter zum Feedback"
             class="w-64"
-            @click="$router.push({ name: 'feedback' })"
+            @click="
+              $router.push({
+                name: 'feedback',
+                params: { id: selectedStory.id },
+              })
+            "
           />
         </div>
       </div>
