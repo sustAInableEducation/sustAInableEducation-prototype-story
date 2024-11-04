@@ -109,9 +109,9 @@ onMounted(() => {
   >
     <h1 class="text-7xl font-bold text-center">{{ storyTitle }}</h1>
     <div v-for="(message, index) in displayedMessages" :key="index">
-      <p>{{ message.story }}</p>
-      <p class="font-bold pt-2">Entscheindungspunkt {{ index + 1 }}:</p>
       <div v-if="index <= 2">
+        <p>{{ message.story }}</p>
+        <p class="font-bold pt-2">Entscheindungspunkt {{ index + 1 }}:</p>
         <ul class="list-disc pl-8">
           <li v-for="option in message.options" :key="option">
             {{ option }}
@@ -128,6 +128,9 @@ onMounted(() => {
             "
           />
         </div>
+      </div>
+      <div v-else class="pb-8">
+        <p>{{ message.story }}</p>
       </div>
     </div>
   </div>
