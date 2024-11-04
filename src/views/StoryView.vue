@@ -163,7 +163,6 @@ onMounted(() => {
             @click="
               $router.push({
                 name: 'feedback',
-                params: { id: selectedStory.id },
               })
             "
           />
