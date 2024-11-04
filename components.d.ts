@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
     Message: typeof import('primevue/message')['default']
+    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

@@ -29,6 +29,7 @@ const displayedMessages = computed<DisplayedMessage[]>(() => {
   })
   return displayedMessages
 })
+const isGenerating = ref<boolean>(false)
 
 watch(displayedMessages, () => {
   nextTick(() => {
@@ -37,6 +38,7 @@ watch(displayedMessages, () => {
 })
 
 const generateNextPart = (userMessage: Message) => {
+  isGenerating.value = true
   messages.value.push(userMessage)
   const data = {
     model: 'llama3.1',
@@ -68,9 +70,13 @@ const generateNextPart = (userMessage: Message) => {
       console.log(error)
       errorWhileGenerating.value = true
     })
+    .finally(() => {
+      isGenerating.value = false
+    })
 }
 
 const startStory = (systemMessage: Message) => {
+  isGenerating.value = true
   messages.value.push(systemMessage)
   generateNextPart({
     role: 'user',
@@ -117,9 +123,9 @@ onMounted(() => {
   </div>
   <div
     v-if="!errorWhileGenerating && storyTitle !== ''"
-    class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-8"
+    class="pt-6 max-w-screen-lg flex flex-col items-center mx-auto gap-4"
   >
-    <h1 class="text-7xl font-bold text-center">{{ storyTitle }}</h1>
+    <h1 class="text-7xl font-bold text-center pb-2">{{ storyTitle }}</h1>
     <div
       v-for="(message, messageIndex) in displayedMessages"
       :key="messageIndex"
@@ -134,7 +140,7 @@ onMounted(() => {
             {{ option }}
           </li>
         </ul>
-        <div class="flex flex-row justify-center gap-12 pt-4">
+        <div class="flex flex-row justify-center gap-12 pt-4 pb-6">
           <Button
             v-for="(option, optionIndex) in message.options"
             :key="optionIndex"
@@ -161,5 +167,17 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    <div
+      v-if="isGenerating"
+      class="flex flex-row justify-center gap-12 pt-4 pb-6"
+    >
+      <ProgressSpinner />
+    </div>
+  </div>
+  <div
+    v-if="!errorWhileGenerating && storyTitle === '' && isGenerating"
+    class="h-[calc(100vh-7rem)] flex justify-center items-center"
+  >
+    <ProgressSpinner />
   </div>
 </template>
