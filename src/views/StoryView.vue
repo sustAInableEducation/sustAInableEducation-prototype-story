@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch, nextTick } from 'vue'
 import axios from 'axios'
 import type { Story } from '../types/story'
 import type { Message } from '../types/message'
@@ -27,6 +27,12 @@ const displayedMessages = computed<DisplayedMessage[]>(() => {
     })
   })
   return displayedMessages
+})
+
+watch(displayedMessages, () => {
+  nextTick(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+  })
 })
 
 const generateNextPart = (userMessage: Message) => {
