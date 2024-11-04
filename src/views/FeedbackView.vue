@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, nextTick } from 'vue'
+import { onMounted, ref, nextTick, computed } from 'vue'
 import type { Story } from '../types/story'
 import { stories } from '@/data/stories'
+import Message from 'primevue/message';
 
 const props = defineProps({
   id: Number,
@@ -14,6 +15,15 @@ const interactivity = ref<number>(-1)
 const thematicRelevancy = ref<number>(-1)
 const learningEffect = ref<number>(-1)
 const additionalFeedback = ref<string>('')
+const feedbackNotComplete = computed(() => {
+  return (
+    immersiveness.value === -1 ||
+    clarity.value === -1 ||
+    interactivity.value === -1 ||
+    thematicRelevancy.value === -1 ||
+    learningEffect.value === -1
+  )
+})
 
 const submitFeedback = () => {
   const feedback = {
@@ -176,7 +186,9 @@ onMounted(() => {
       <TextArea v-model="additionalFeedback" autoResize rows="5" cols="30" />
     </div>
     <div class="flex flex-row justify-center gap-12 pt-4 pb-6">
+      <Message v-if="feedbackNotComplete" severity="error">Bewerte bitte alle Aspekte, bevor das Feedback abgeschickt werden kann!</Message>
       <Button
+        v-else
         label="Feedback abschicken"
         class="w-64"
         @click="submitFeedback()"
