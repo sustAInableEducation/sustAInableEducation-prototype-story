@@ -135,7 +135,7 @@ onMounted(() => {
         <p class="font-bold pt-2">
           Entscheindungspunkt {{ messageIndex + 1 }}:
         </p>
-        <ul class="list-disc pl-8">
+        <ul class="list-decimal pl-8">
           <li v-for="option in message.options" :key="option">
             {{ option }}
           </li>
