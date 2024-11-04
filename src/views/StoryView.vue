@@ -13,6 +13,7 @@ const selectedStory = ref<Story>({} as Story)
 const errorWhileGenerating = ref<boolean>(false)
 const messages = ref<Message[]>([])
 const storyTitle = ref<string>('')
+const selectedOptions = ref<boolean[]>([])
 const displayedMessages = computed<DisplayedMessage[]>(() => {
   const filteredMessages = messages.value.filter(
     message => message.role === 'assistant',
@@ -129,7 +130,9 @@ onMounted(() => {
             :key="idx"
             :label="`Option ${idx + 1}`"
             class="w-64"
+            :disabled="selectedOptions[index]"
             @click="
+              selectedOptions[index] = true
               generateNextPart({ role: 'user', content: `Option ${idx + 1}` })
             "
           />
