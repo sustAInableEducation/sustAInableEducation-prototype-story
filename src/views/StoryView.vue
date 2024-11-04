@@ -131,6 +131,13 @@ onMounted(() => {
       </div>
       <div v-else class="pb-8">
         <p>{{ message.story }}</p>
+        <div class="flex flex-row justify-center gap-12 pt-4">
+          <Button
+          label="Weiter zum Feedback"
+          class="w-64"
+          @click="$router.push({ name: 'feedback' })"
+        />
+        </div>
       </div>
     </div>
   </div>
