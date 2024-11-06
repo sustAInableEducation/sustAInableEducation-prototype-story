@@ -16,14 +16,11 @@ const startStory = (id: number) => {
     <h1 class="text-7xl font-bold">Prototyp Story Generierung</h1>
     <p>
       Unser Prototyp zeigt, wie Künstliche Intelligenz (KI) genutzt werden kann,
-      um interaktive Geschichten rund um Nachhaltigkeit zu erstellen.
+      um interaktive Geschichten rund um Nachhaltigkeit zu durchleben.
       Besucher*innen können zwischen verschiedenen Themen wählen und erleben,
       wie ihre Entscheidungen den Verlauf der Story beeinflussen. Am Ende gibt
       es die Möglichkeit, Feedback zu geben, das uns hilft, die endgültige
-      Version der Web-App zu verbessern. Dein Feedback ist uns wichtig! Teste
-      die Geschichten und sag uns, was dir gefällt oder wo es noch
-      Verbesserungen gibt. Deine Rückmeldungen fließen direkt in die
-      Weiterentwicklung der App ein.
+      Version der Web-App zu verbessern.
     </p>
     <div class="flex flex-row justify-center gap-12">
       <Button
