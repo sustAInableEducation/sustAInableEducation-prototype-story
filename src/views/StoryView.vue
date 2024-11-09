@@ -130,7 +130,7 @@ onMounted(() => {
       v-for="(message, messageIndex) in displayedMessages"
       :key="messageIndex"
     >
-      <div v-if="messageIndex <= 2">
+      <div v-if="messageIndex <= 0">
         <p>{{ message.story }}</p>
         <p class="font-bold pt-2">Entscheidungspunkt {{ messageIndex + 1 }}:</p>
         <ul class="list-decimal pl-8">

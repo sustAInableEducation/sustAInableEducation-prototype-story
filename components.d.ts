@@ -10,10 +10,7 @@ declare module 'vue' {
     Button: typeof import('primevue/button')['default']
     Message: typeof import('primevue/message')['default']
     ProgressSpinner: typeof import('primevue/progressspinner')['default']
-    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Tag: typeof import('primevue/tag')['default']
-    TextArea: typeof import('primevue/textarea')['default']
   }
 }
