@@ -41,30 +41,29 @@ const generateNextPart = (userMessage: Message) => {
   isGenerating.value = true
   messages.value.push(userMessage)
   const data = {
-    model: 'llama3.1',
+    model: 'meta-llama/Llama-3.3-70B-Instruct',
     messages: messages.value,
-    format: 'json',
-    stream: false,
+    response_format: {"type":"json_object"},
   }
   const config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: import.meta.env.VITE_LLM_API_URL + '/chat',
+    url: import.meta.env.VITE_API_URL,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`,
     },
     data: data,
   }
-
+  console.log(config)
   axios
     .request(config)
     .then(response => {
-      const assistantMessage = response.data.message
+      const assistantMessage = response.data.choices[0].message
+      assistantMessage.content = assistantMessage.content.replace(/(\r\n|\n|\r)/gm, '')
+      console.log(assistantMessage)
       messages.value.push(assistantMessage)
       storyTitle.value = JSON.parse(assistantMessage.content).title
-      //console.log(assistantMessage)
-      //console.log(storyTitle.value)
-      console.log(displayedMessages.value)
     })
     .catch(error => {
       console.log(error)
